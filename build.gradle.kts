@@ -13,6 +13,7 @@ dependencies {
     implementation(kotlin("stdlib"))
     implementation("org.jsoup:jsoup:1.+")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:5.+")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:5.+")
 }
 
 tasks.withType<Test> {

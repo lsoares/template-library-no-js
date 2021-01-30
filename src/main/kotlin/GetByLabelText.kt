@@ -15,5 +15,5 @@ private fun Element.getWrapped(label: String) =
     getElementsByTag("label")
         .asSequence()
         .filter { it.text() == label }
-        .map { it.select("input") }
+        .map { it.select("input, select, textarea, button, output") }
         .flatten()
