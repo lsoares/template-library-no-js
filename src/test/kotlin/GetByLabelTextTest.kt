@@ -45,9 +45,9 @@ class GetByLabelTextTest {
     fun `get by label - wrapper`() {
         val doc = Jsoup.parse(
             """
-            <label>Username <input id="username" /></label>
-            <label>Password <input /></label>
-        """
+             <label>Username <input id="username" /></label>
+             <label>Password <input /></label>
+           """
         )
 
         val byLabelText = doc.getByLabelText("Username")
@@ -88,15 +88,21 @@ class GetByLabelTextTest {
         assertThrows(UndefinedResult::class.java) { byLabelText() }
     }
 
+    @Test
+    fun `by aria labelled by`() {
+        val doc = Jsoup.parse(
+            """
+            <label id="username-label">Username</label>
+            <input aria-labelledby="username-label" />
+        """
+        )
 
-    // The aria-labelledby attribute with form elements
-//    <label id="username-label">Username</label>
-//    <input aria-labelledby="username-label" />
+        val byLabelText = doc.getByLabelText("Username")
 
-    // Wrapper labels where the label text is in another child element
-//    <label>
-//    <span>Username</span>
-//    <input />
-//    </label>
+        assertEquals("""<input aria-labelledby="username-label">""", byLabelText.toString())
+    }
+
+    // TODO Wrapper labels where the label text is in another child element
+    // TODO selector
 }
 
