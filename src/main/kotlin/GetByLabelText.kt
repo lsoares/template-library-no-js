@@ -3,13 +3,19 @@ import org.jsoup.select.Elements
 import java.lang.Exception
 
 
-fun Element.getByLabelText(label: String, exact: Boolean = true): Element =
+fun Element.getByLabelText(
+    label: String,
+    exact: Boolean = true,
+    selector: String? = null
+): Element =
     getElementsByTag("label")
-        .singleOrNull { it.initialMatcher(label, exact) }
-        ?.let {
+        .filter { it.initialMatcher(label, exact) }
+        .map {
             it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
         }
-        ?.singleOrNull { it.tagName() in "input, select, textarea, button, output" }
+        .flatten()
+        .singleOrNull {
+            it.tagName() in selector ?: "input, select, textarea, button, output" }
         ?: throw UndefinedResult()
 
 private fun Element.initialMatcher(label: String, exact: Boolean) =

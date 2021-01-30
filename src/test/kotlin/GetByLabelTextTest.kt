@@ -131,7 +131,34 @@ class GetByLabelTextTest {
         assertEquals("""<input id="email">""", byLabelText.toString())
     }
 
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            """
+            <label>
+              Username
+              <input />
+            </label>
+            <label>
+              Username
+              <textarea></textarea>
+            </label> 
+        """,
+            """
+            <label id="username">Username</label>
+            <input aria-labelledby="username" />
+            <span aria-labelledby="username">Please enter your username</span>
+        """
+        ]
+    )
+    fun `specifying a selector`(html: String) {
+        val doc = Jsoup.parse(html)
+
+        val byLabelText = doc.getByLabelText("Username", selector = "input")
+
+        assertEquals("input", byLabelText.tagName())
+    }
+
     // TODO Wrapper labels where the label text is in another child element
-    // TODO selector
 }
 
