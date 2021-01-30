@@ -1,32 +1,25 @@
 import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 import java.lang.Exception
 
 fun Element.getByLabelText(label: String): Element =
-    (getByFor(label) + getWrapped(label) + getByAriaLabelledBy(label))
-        .singleOrNull() ?: throw UndefinedResult()
-
-private fun Element.getByAriaLabelledBy(label: String): Sequence<Element> =
     getElementsByTag("label")
-        .asSequence()
-        .filter { it.text() == label }
-        .map { it.attr("id") }
-        .filter(String::isNotBlank)
-        .map { getElementsByAttributeValue("aria-labelledby", it) }
-        .flatten()
+        .singleOrNull { it.text() == label }
+        ?.let {
+            it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
+        }
+        ?.singleOrNull { it.tagName() in "input, select, textarea, button, output" }
+        ?: throw UndefinedResult()
 
-private fun Element.getByFor(label: String): Sequence<Element> =
-    getElementsByTag("label")
-        .asSequence()
-        .filter { it.text() == label }
-        .map { it.attr("for") }
-        .filter(String::isNotBlank)
-        .map(::getElementById)
+private fun Element.getByAriaLabelledBy(label: Element) =
+    label.attr("id")
+        .takeIf(String::isNotBlank)
+        ?.let { getElementsByAttributeValue("aria-labelledby", it) }
+        ?: Elements()
 
-private fun Element.getWrapped(label: String): Sequence<Element> =
-    getElementsByTag("label")
-        .asSequence()
-        .filter { it.text() == label }
-        .map { it.select("input, select, textarea, button, output") }
-        .flatten()
+private fun Element.getByFor(label: Element) =
+    label.attr("for")
+        .takeIf(String::isNotBlank)
+        ?.let(::getElementById)
 
 class UndefinedResult : Exception()

@@ -45,14 +45,14 @@ class GetByLabelTextTest {
     fun `get by label - wrapper`() {
         val doc = Jsoup.parse(
             """
-             <label>Username <input id="username" /></label>
+             <label>Username <input arg="username" /></label>
              <label>Password <input /></label>
            """
         )
 
         val byLabelText = doc.getByLabelText("Username")
 
-        assertEquals("""<input id="username">""", byLabelText.toString())
+        assertEquals("""<input arg="username">""", byLabelText.toString())
     }
 
     @ParameterizedTest
@@ -66,11 +66,11 @@ class GetByLabelTextTest {
     }
 
     @Test
-    fun `fails when more than one are available`() {
+    fun `fails when more than one is available`() {
         val doc = Jsoup.parse(
             """
-            <label for="x">Username <input id="username" /></label>
-            <label id="x"><input /></label>
+            <label for="x">Username <input /></label>
+            <input id="x" />
         """
         )
 
@@ -102,6 +102,7 @@ class GetByLabelTextTest {
         assertEquals("""<input aria-labelledby="username-label">""", byLabelText.toString())
     }
 
+    // TODO: do not select non-form elements
     // TODO Wrapper labels where the label text is in another child element
     // TODO selector
 }
