@@ -117,6 +117,20 @@ class GetByLabelTextTest {
         assertTrue(byLabelText.exceptionOrNull() is UndefinedResult)
     }
 
+    @Test
+    fun `get by label - for - NOT exact`() {
+        val doc = Jsoup.parse(
+            """
+            <label for="email">Email address</label>
+            <input id="email" />
+        """
+        )
+
+        val byLabelText = doc.getByLabelText("email", exact = false)
+
+        assertEquals("""<input id="email">""", byLabelText.toString())
+    }
+
     // TODO Wrapper labels where the label text is in another child element
     // TODO selector
 }
