@@ -1,10 +1,13 @@
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
+/**
+ * https://testing-library.com/docs/queries/bylabeltext
+ */
 class GetByLabelTextTest {
 
     @Test
@@ -61,5 +64,39 @@ class GetByLabelTextTest {
 
         assertEquals(tag, byLabelText.tagName())
     }
+
+    @Test
+    fun `fails when more than one are available`() {
+        val doc = Jsoup.parse(
+            """
+            <label for="x">Username <input id="username" /></label>
+            <label id="x"><input /></label>
+        """
+        )
+
+        val byLabelText = { doc.getByLabelText("Username") }
+
+        assertThrows(UndefinedResult::class.java) { byLabelText() }
+    }
+
+    @Test
+    fun `fails when none is available`() {
+        val doc = Jsoup.parse("<span></span>")
+
+        val byLabelText = { doc.getByLabelText("Username") }
+
+        assertThrows(UndefinedResult::class.java) { byLabelText() }
+    }
+
+
+    // The aria-labelledby attribute with form elements
+//    <label id="username-label">Username</label>
+//    <input aria-labelledby="username-label" />
+
+    // Wrapper labels where the label text is in another child element
+//    <label>
+//    <span>Username</span>
+//    <input />
+//    </label>
 }
 
