@@ -1,6 +1,5 @@
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -102,7 +101,22 @@ class GetByLabelTextTest {
         assertEquals("""<input aria-labelledby="username-label">""", byLabelText.toString())
     }
 
-    // TODO: do not select non-form elements
+    @ParameterizedTest
+    @ValueSource(
+        strings = [
+            "<label for='x'>nope</label> <div id='x'></div>",
+            "<label>nope <span /></label>",
+            "<label id='x'>nope</label> <section aria-labelledby='x' />"
+        ]
+    )
+    fun `fails with the wrong type`(html: String) {
+        val doc = Jsoup.parse(html)
+
+        val byLabelText = runCatching { doc.getByLabelText("nope") }
+
+        assertTrue(byLabelText.exceptionOrNull() is UndefinedResult)
+    }
+
     // TODO Wrapper labels where the label text is in another child element
     // TODO selector
 }
