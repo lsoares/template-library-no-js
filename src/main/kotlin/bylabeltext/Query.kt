@@ -1,11 +1,12 @@
 package bylabeltext
 
+import ByFunction
 import ByRegex
 import ByString
 import TextMatch
+import UndefinedResult
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
-import java.lang.Exception
 
 fun Element.queryByLabelText(text: String): List<Element>? =
     queryAllByLabelText(text)
@@ -28,6 +29,16 @@ fun Element.queryAllByLabelText(
     selector: String? = null,
 ) = queryAllByLabelText(
     text = ByString(text),
+    exact = exact,
+    selector = selector,
+)
+
+fun Element.queryAllByLabelText(
+    exact: Boolean = true,
+    selector: String? = null,
+    text: (String) -> Boolean,
+) = queryAllByLabelText(
+    text = ByFunction(text),
     exact = exact,
     selector = selector,
 )
@@ -56,7 +67,7 @@ private fun Element.matcher(text: TextMatch, exact: Boolean) =
             false -> text().toLowerCase().contains(text.value.toLowerCase())
         }
         is ByRegex -> text().matches(text.value)
-        else -> error("not implemented")
+        is ByFunction -> text.matcher.invoke(text())
     }
 
 private fun Element.getByAriaLabelledBy(label: Element) =
@@ -69,5 +80,3 @@ private fun Element.getByFor(label: Element) =
     label.attr("for")
         .takeIf(String::isNotBlank)
         ?.let(::getElementById)
-
-class UndefinedResult : Exception()

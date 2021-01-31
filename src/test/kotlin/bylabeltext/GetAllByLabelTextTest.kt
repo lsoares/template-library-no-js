@@ -1,5 +1,6 @@
 package bylabeltext
 
+import UndefinedResult
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertThrows
