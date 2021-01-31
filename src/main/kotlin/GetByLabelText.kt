@@ -8,6 +8,8 @@ fun Element.getAllByLabelText(
     selector: String? = null
 ): List<Element> =
     filterByLabel(label, exact, selector)
+        .takeIf { it.isNotEmpty() }
+        ?: throw UndefinedResult()
 
 fun Element.getByLabelText(
     label: String,
