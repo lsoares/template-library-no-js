@@ -49,4 +49,8 @@ class GetAllByLabelTextTest {
 
         assertThrows(UndefinedResult::class.java) { byLabelText() }
     }
+
+    // TODO: receive regex
+    // TODO: receive function
+    // TODO: non-exact match
 }
