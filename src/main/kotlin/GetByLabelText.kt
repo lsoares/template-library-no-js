@@ -3,30 +3,49 @@ import org.jsoup.select.Elements
 import java.lang.Exception
 
 fun Element.queryByLabelText(text: String): List<Element>? =
-    queryAllByLabelText(text)
+    queryAllByLabelText(ByString(text))
         .takeIf { it.isNotEmpty() }
         ?.also { check(it.size == 1) { throw UndefinedResult() } }
 
 fun Element.getAllByLabelText(text: String): List<Element> =
-    queryAllByLabelText(text)
+    queryAllByLabelText(ByString(text))
         .takeIf { it.isNotEmpty() }
         ?: throw UndefinedResult()
 
 fun Element.getByLabelText(text: String): Element =
-    queryAllByLabelText(text)
+    queryAllByLabelText(ByString(text))
         .singleOrNull()
         ?: throw UndefinedResult()
 
+
 fun Element.queryAllByLabelText(
-    text: String? = null,
+    text: Regex,
     exact: Boolean = true,
     selector: String? = null,
-    textRegex: Regex? = null,
+) = queryAllByLabelText(
+    text = ByRegex(text),
+    exact = exact,
+    selector = selector,
+)
+
+fun Element.queryAllByLabelText(
+    text: String,
+    exact: Boolean = true,
+    selector: String? = null,
+) = queryAllByLabelText(
+    text = ByString(text),
+    exact = exact,
+    selector = selector,
+)
+
+internal fun Element.queryAllByLabelText(
+    text: TextMatch,
+    exact: Boolean = true,
+    selector: String? = null,
 ): List<Element> =
     getElementsByTag("label")
         .asSequence()
-        .filter { it.textMatcher(text, exact) }
-        .filter { it.textRegexMatcher(textRegex) }
+        .filter { it.matcher(text, exact) }
         .map {
             it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
         }
@@ -36,18 +55,15 @@ fun Element.queryAllByLabelText(
         }
         .toList()
 
-private fun Element.textRegexMatcher(textRegex: Regex?) =
-    textRegex?.let {
-        text().matches(it)
-    } ?: true
-
-private fun Element.textMatcher(text: String?, exact: Boolean) =
-    text?.let {
-        when (exact) {
-            true -> text() == it
-            false -> text().toLowerCase().contains(it.toLowerCase())
+private fun Element.matcher(text: TextMatch, exact: Boolean) =
+    when (text) {
+        is ByString -> when (exact) {
+            true -> text() == text.value
+            false -> text().toLowerCase().contains(text.value.toLowerCase())
         }
-    } ?: true
+        is ByRegex -> text().matches(text.value)
+        else -> error("not implemented")
+    }
 
 private fun Element.getByAriaLabelledBy(label: Element) =
     label.attr("id")

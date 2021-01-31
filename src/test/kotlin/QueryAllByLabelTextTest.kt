@@ -164,7 +164,7 @@ class QueryAllByLabelTextTest {
         """
         )
 
-        val byLabelText = doc.queryAllByLabelText(textRegex = "User.*".toRegex())
+        val byLabelText = doc.queryAllByLabelText("User.*".toRegex())
 
         assertEquals(
             """[<input id="id1">, <textarea></textarea>]""",
