@@ -22,7 +22,7 @@ class QueryAllByLabelTextTest {
 
         val byLabelText = doc.queryAllByLabelText("Email address")
 
-        assertEquals("""[<input id="email">]""", byLabelText.toString())
+        assertEquals("email", byLabelText.single().id())
     }
 
     @ParameterizedTest
@@ -44,14 +44,14 @@ class QueryAllByLabelTextTest {
     fun `get by label - wrapper`() {
         val doc = Jsoup.parse(
             """
-             <label>Username <input arg="username" /></label>
+             <label>Username <input name="username" /></label>
              <label>Password <input /></label>
            """
         )
 
         val byLabelText = doc.queryAllByLabelText("Username")
 
-        assertEquals("""[<input arg="username">]""", byLabelText.toString())
+        assertEquals("username", byLabelText.single().attr("name"))
     }
 
     @ParameterizedTest
@@ -75,10 +75,7 @@ class QueryAllByLabelTextTest {
 
         val byLabelText = doc.queryAllByLabelText("Username")
 
-        assertEquals(
-            """[<input aria-labelledby="username-label">]""",
-            byLabelText.toString()
-        )
+        assertEquals("input", byLabelText.single().tagName())
     }
 
     @ParameterizedTest
@@ -100,10 +97,12 @@ class QueryAllByLabelTextTest {
     // https://testing-playground.com/gist/20925bfef48061b84eacb647acdddc12/c1fe8d48f98eb253fc868ca6ebb66aa9fe0744eb
     @Test
     fun `no results with selector the wrong type`() {
-        val doc = Jsoup.parse("""
+        val doc = Jsoup.parse(
+            """
             <label for='x'>Username</label>
             <div id='x'></input>
-        """)
+        """
+        )
 
         val byLabelText = doc.queryAllByLabelText("Username", selector = "div")
 
@@ -121,7 +120,7 @@ class QueryAllByLabelTextTest {
 
         val byLabelText = doc.queryAllByLabelText("email", exact = false)
 
-        assertEquals("""[<input id="email">]""", byLabelText.toString())
+        assertEquals("email", byLabelText.single().id())
     }
 
     @ParameterizedTest
@@ -202,6 +201,6 @@ class QueryAllByLabelTextTest {
             it.text().contains("name")
         }
 
-        assertTrue(byLabelText.single().tagName() == "textarea")
+        assertEquals("textarea", byLabelText.single().tagName())
     }
 }
