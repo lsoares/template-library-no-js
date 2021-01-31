@@ -15,11 +15,8 @@ fun Element.getByLabelText(
     selector: String? = null
 ): Element =
     filterByLabel(label, exact, selector)
-        .singleOrNull {
-            it.tagName() in selector ?: "input, select, textarea, button, output"
-        }
+        .singleOrNull()
         ?: throw UndefinedResult()
-
 
 private fun Element.filterByLabel(
     label: String,
@@ -32,6 +29,9 @@ private fun Element.filterByLabel(
             it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
         }
         .flatten()
+        .filter {
+            it.tagName() in selector ?: "input, select, textarea, button, output"
+        }
 
 private fun Element.initialMatcher(label: String, exact: Boolean) =
     when (exact) {
