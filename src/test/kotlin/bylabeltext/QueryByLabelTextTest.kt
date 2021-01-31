@@ -2,6 +2,8 @@ package bylabeltext
 
 import UndefinedResult
 import org.jsoup.Jsoup
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -30,5 +32,19 @@ class QueryByLabelTextTest {
         val byLabelText = { doc.queryByLabelText("Email") }
 
         assertThrows<UndefinedResult> { byLabelText() }
+    }
+
+    @Test
+    fun `query by label - for - NOT exact`() {
+        val doc = Jsoup.parse(
+            """
+            <label for="email">Email address</label>
+            <input id="email" />
+        """
+        )
+
+        val byLabelText = doc.queryByLabelText("email", exact = false)
+
+        assertEquals("email", byLabelText?.single()?.id())
     }
 }

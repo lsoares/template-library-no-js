@@ -4,8 +4,11 @@ import UndefinedResult
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
-fun Element.queryByLabelText(text: String): List<Element>? =
-    queryAllByLabelText { it.text() == text }
+fun Element.queryByLabelText(
+    text: String,
+    exact: Boolean = true,
+): List<Element>? =
+    queryAllByLabelText(text, exact)
         .takeIf { it.isNotEmpty() }
         ?.also { check(it.size == 1) { throw UndefinedResult() } }
 
@@ -29,11 +32,11 @@ fun Element.queryAllByLabelText(
 
 fun Element.queryAllByLabelText(
     selector: String? = null,
-    filter: (Element) -> Boolean,
+    text: (Element) -> Boolean,
 ): List<Element> =
     getElementsByTag("label")
         .asSequence()
-        .filter(filter)
+        .filter(text)
         .map {
             it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
         }
