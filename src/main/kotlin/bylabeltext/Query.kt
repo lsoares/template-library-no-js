@@ -1,22 +1,16 @@
+package bylabeltext
+
+import ByRegex
+import ByString
+import TextMatch
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.lang.Exception
 
 fun Element.queryByLabelText(text: String): List<Element>? =
-    queryAllByLabelText(ByString(text))
+    queryAllByLabelText(text)
         .takeIf { it.isNotEmpty() }
         ?.also { check(it.size == 1) { throw UndefinedResult() } }
-
-fun Element.getAllByLabelText(text: String): List<Element> =
-    queryAllByLabelText(ByString(text))
-        .takeIf { it.isNotEmpty() }
-        ?: throw UndefinedResult()
-
-fun Element.getByLabelText(text: String): Element =
-    queryAllByLabelText(ByString(text))
-        .singleOrNull()
-        ?: throw UndefinedResult()
-
 
 fun Element.queryAllByLabelText(
     text: Regex,

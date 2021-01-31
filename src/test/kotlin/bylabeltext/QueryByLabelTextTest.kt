@@ -1,3 +1,5 @@
+package bylabeltext
+
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertNull
 import org.junit.jupiter.api.Test
