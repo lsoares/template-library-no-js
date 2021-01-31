@@ -2,6 +2,15 @@ import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 import java.lang.Exception
 
+fun Element.queryByLabelText(
+    label: String,
+    exact: Boolean = true,
+    selector: String? = null
+): List<Element>? =
+    queryAllByLabelText(label, exact, selector)
+        .takeIf { it.isNotEmpty() }
+        ?.also { check(it.size == 1) { throw UndefinedResult() } }
+
 fun Element.getAllByLabelText(
     label: String,
     exact: Boolean = true,
