@@ -38,10 +38,7 @@ class GetAllByLabelTextTest {
 
         val byLabelText = doc.getAllByLabelText("Email address")
 
-        assertEquals(
-            """[<input id="email1">]""",
-            byLabelText.toString()
-        )
+        assertEquals("input", byLabelText.single().tagName())
     }
 
     @Test

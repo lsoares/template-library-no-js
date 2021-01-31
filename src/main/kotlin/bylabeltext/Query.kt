@@ -1,56 +1,39 @@
 package bylabeltext
 
-import ByFunction
-import ByRegex
-import ByString
-import TextMatch
 import UndefinedResult
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
 fun Element.queryByLabelText(text: String): List<Element>? =
-    queryAllByLabelText(text)
+    queryAllByLabelText { it.text() == text }
         .takeIf { it.isNotEmpty() }
         ?.also { check(it.size == 1) { throw UndefinedResult() } }
-
-fun Element.queryAllByLabelText(
-    text: Regex,
-    exact: Boolean = true,
-    selector: String? = null,
-) = queryAllByLabelText(
-    text = ByRegex(text),
-    exact = exact,
-    selector = selector,
-)
 
 fun Element.queryAllByLabelText(
     text: String,
     exact: Boolean = true,
     selector: String? = null,
-) = queryAllByLabelText(
-    text = ByString(text),
-    exact = exact,
-    selector = selector,
-)
+) = queryAllByLabelText(selector) {
+    when (exact) {
+        true -> it.text() == text
+        false -> it.text().toLowerCase().contains(text.toLowerCase())
+    }
+}
 
 fun Element.queryAllByLabelText(
-    exact: Boolean = true,
+    text: Regex,
     selector: String? = null,
-    text: (String) -> Boolean,
-) = queryAllByLabelText(
-    text = ByFunction(text),
-    exact = exact,
-    selector = selector,
-)
+) = queryAllByLabelText(selector) {
+    it.text().matches(text)
+}
 
-internal fun Element.queryAllByLabelText(
-    text: TextMatch,
-    exact: Boolean = true,
+fun Element.queryAllByLabelText(
     selector: String? = null,
+    filter: (Element) -> Boolean,
 ): List<Element> =
     getElementsByTag("label")
         .asSequence()
-        .filter { it.matcher(text, exact) }
+        .filter(filter)
         .map {
             it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
         }
@@ -59,16 +42,6 @@ internal fun Element.queryAllByLabelText(
             it.tagName() in selector ?: "input, select, textarea, button, output"
         }
         .toList()
-
-private fun Element.matcher(text: TextMatch, exact: Boolean) =
-    when (text) {
-        is ByString -> when (exact) {
-            true -> text() == text.value
-            false -> text().toLowerCase().contains(text.value.toLowerCase())
-        }
-        is ByRegex -> text().matches(text.value)
-        is ByFunction -> text.matcher.invoke(text())
-    }
 
 private fun Element.getByAriaLabelledBy(label: Element) =
     label.attr("id")

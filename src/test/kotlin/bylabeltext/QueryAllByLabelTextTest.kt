@@ -186,7 +186,7 @@ class QueryAllByLabelTextTest {
         )
 
         val byLabelText = doc.queryAllByLabelText {
-            it.contains("name")
+            it.text().contains("name")
         }
 
         assertTrue(byLabelText.single().tagName() == "textarea")
