@@ -38,8 +38,11 @@ fun Element.queryAllByLabelText(
             it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
         }
         .flatten()
-        .filter {
-            it.tagName() in selector ?: "input, select, textarea, button, output"
+        .filter { el ->
+            when (selector) {
+                null -> el.tagName() in setOf("input", "select", "textarea", "button", "output")
+                else -> el.tagName() == selector
+            }
         }
         .toList()
 
