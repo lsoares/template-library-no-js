@@ -97,6 +97,19 @@ class QueryAllByLabelTextTest {
         assertTrue(byLabelText.isEmpty())
     }
 
+    // https://testing-playground.com/gist/20925bfef48061b84eacb647acdddc12/c1fe8d48f98eb253fc868ca6ebb66aa9fe0744eb
+    @Test
+    fun `no results with selector the wrong type`() {
+        val doc = Jsoup.parse("""
+            <label for='x'>Username</label>
+            <div id='x'></input>
+        """)
+
+        val byLabelText = doc.queryAllByLabelText("Username", selector = "div")
+
+        assertTrue(byLabelText.isEmpty())
+    }
+
     @Test
     fun `get by label - for - NOT exact`() {
         val doc = Jsoup.parse(
