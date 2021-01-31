@@ -7,7 +7,7 @@ fun Element.getAllByLabelText(
     exact: Boolean = true,
     selector: String? = null
 ): List<Element> =
-    filterByLabel(label, exact, selector)
+    queryAllByLabelText(label, exact, selector)
         .takeIf { it.isNotEmpty() }
         ?: throw UndefinedResult()
 
@@ -16,11 +16,11 @@ fun Element.getByLabelText(
     exact: Boolean = true,
     selector: String? = null
 ): Element =
-    filterByLabel(label, exact, selector)
+    queryAllByLabelText(label, exact, selector)
         .singleOrNull()
         ?: throw UndefinedResult()
 
-private fun Element.filterByLabel(
+fun Element.queryAllByLabelText(
     label: String,
     exact: Boolean = true,
     selector: String? = null
