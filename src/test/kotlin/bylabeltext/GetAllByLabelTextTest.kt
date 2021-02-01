@@ -34,5 +34,4 @@ class GetAllByLabelTextTest {
     }
 
     // TODO: receive function
-    // TODO: non-exact match
 }

@@ -33,18 +33,4 @@ class QueryByLabelTextTest {
 
         assertThrows<UndefinedResult> { byLabelText() }
     }
-
-    @Test
-    fun `query by label - for - NOT exact`() {
-        val doc = Jsoup.parse(
-            """
-            <label for="email">Email address</label>
-            <input id="email" />
-        """
-        )
-
-        val byLabelText = doc.queryByLabelText("email", exact = false)
-
-        assertEquals("email", byLabelText?.id())
-    }
 }

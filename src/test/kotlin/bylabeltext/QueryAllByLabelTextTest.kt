@@ -109,20 +109,6 @@ class QueryAllByLabelTextTest {
         assertTrue(byLabelText.isEmpty())
     }
 
-    @Test
-    fun `get by label - for - NOT exact`() {
-        val doc = Jsoup.parse(
-            """
-            <label for="email">Email address</label>
-            <input id="email" />
-        """
-        )
-
-        val byLabelText = doc.queryAllByLabelText("email", exact = false)
-
-        assertEquals("email", byLabelText.single().id())
-    }
-
     @ParameterizedTest
     @ValueSource(
         strings = [

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 
-class Regex {
+class RegexTest {
 
     @Test
     fun `search one by regex`() {

@@ -31,6 +31,5 @@ class GetByLabelTextTest {
     }
     // TODO: test correct type
     // TODO: receive function
-    // TODO: non-exact match
 }
 
