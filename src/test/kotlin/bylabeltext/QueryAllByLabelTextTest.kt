@@ -25,21 +25,6 @@ class QueryAllByLabelTextTest {
         assertEquals("email", byLabelText.single().id())
     }
 
-    @ParameterizedTest
-    @ValueSource(strings = ["input", "select", "textarea", "button", "output"])
-    fun `get any form element by label - for`(tag: String) {
-        val doc = Jsoup.parse(
-            """
-                <label for='x'>by for</label>
-                <$tag id='x' />
-            """
-        )
-
-        val byLabelText = doc.queryAllByLabelText("by for")
-
-        assertEquals(tag, byLabelText.single().tagName())
-    }
-
     @Test
     fun `get by label - wrapper`() {
         val doc = Jsoup.parse(
