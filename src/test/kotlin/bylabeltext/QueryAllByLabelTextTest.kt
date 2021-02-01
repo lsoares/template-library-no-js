@@ -10,22 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource
 class QueryAllByLabelTextTest {
 
     @Test
-    fun `get by label - for`() {
-        val doc = Jsoup.parse(
-            """
-            <label for="email">Email address</label>
-            <input id="email" />
-            <label for="password">Password</label>
-            <input id="password" />
-        """
-        )
-
-        val byLabelText = doc.queryAllByLabelText("Email address")
-
-        assertEquals("email", byLabelText.single().id())
-    }
-
-    @Test
     fun `get by label - wrapper`() {
         val doc = Jsoup.parse(
             """

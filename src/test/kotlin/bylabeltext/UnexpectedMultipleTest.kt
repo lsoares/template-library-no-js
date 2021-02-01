@@ -5,7 +5,7 @@ import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 
-class GetByLabelTextTest {
+class UnexpectedMultipleTest {
 
     @Test
     fun `fails when more than one is available`() {
@@ -16,12 +16,11 @@ class GetByLabelTextTest {
         """
         )
 
-        val byLabelText = { doc.getByLabelText("Username") }
+        val getByLabelText = { doc.getByLabelText("Username") }
+        val queryByLabelText = { doc.queryByLabelText("Username") }
 
-        assertThrows(UndefinedResult::class.java) { byLabelText() }
+        assertThrows(UndefinedResult::class.java) { getByLabelText() }
+        assertThrows(UndefinedResult::class.java) { queryByLabelText() }
     }
-
-    // TODO: test correct type
-    // TODO: receive function
 }
 
