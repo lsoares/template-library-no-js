@@ -9,20 +9,6 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class QueryAllByLabelTextTest {
 
-    @Test
-    fun `get by label - wrapper`() {
-        val doc = Jsoup.parse(
-            """
-             <label>Username <input name="username" /></label>
-             <label>Password <input /></label>
-           """
-        )
-
-        val byLabelText = doc.queryAllByLabelText("Username")
-
-        assertEquals("username", byLabelText.single().attr("name"))
-    }
-
     @ParameterizedTest
     @ValueSource(strings = ["input", "select", "textarea", "button", "output"])
     fun `get any form element by label - wrapper`(tag: String) {
@@ -31,20 +17,6 @@ class QueryAllByLabelTextTest {
         val byLabelText = doc.queryAllByLabelText("wrapped")
 
         assertEquals(tag, byLabelText.single().tagName())
-    }
-
-    @Test
-    fun `by aria labelled by`() {
-        val doc = Jsoup.parse(
-            """
-            <label id="username-label">Username</label>
-            <input aria-labelledby="username-label" />
-        """
-        )
-
-        val byLabelText = doc.queryAllByLabelText("Username")
-
-        assertEquals("input", byLabelText.single().tagName())
     }
 
     @ParameterizedTest
