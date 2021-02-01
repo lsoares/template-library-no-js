@@ -8,10 +8,10 @@ fun Element.getAllByLabelText(
     selector: String? = null,
     exact: Boolean = true
 ): List<Element> =
-    queryAllByLabelText(text, exact, selector).getAllBy()
+    queryAllByLabelText(text = text, exact = exact, selector = selector).getAllBy()
 
-fun Element.getAllByLabelText(text: Regex): List<Element> =
-    queryAllByLabelText(text).getAllBy()
+fun Element.getAllByLabelText(text: Regex, selector: String? = null): List<Element> =
+    queryAllByLabelText(text = text, selector = selector).getAllBy()
 
 fun Element.getAllByLabelText(selector: String? = null, text: (Element) -> Boolean): List<Element> =
-    queryAllByLabelText(selector, text).getAllBy()
+    queryAllByLabelText(selector = selector, text = text).getAllBy()
