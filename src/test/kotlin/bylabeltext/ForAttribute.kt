@@ -7,7 +7,25 @@ import org.junit.jupiter.api.Test
 class ForAttribute {
 
     @Test
-    fun `label for`() {
+    fun `for with one`() {
+        val doc = Jsoup.parse(
+            """
+            <label for="email">Email address</label>
+            <input id="email" />
+            <label for="password">Password</label>
+            <input id="password" />
+        """
+        )
+
+        val queryByLabelText = doc.queryByLabelText("Email address")
+        val getByLabelText = doc.getByLabelText("Email address")
+
+        assertEquals("email", queryByLabelText?.id())
+        assertEquals("email", getByLabelText.id())
+    }
+
+    @Test
+    fun `for with all`() {
         val doc = Jsoup.parse(
             """
             <label for="email">Email address</label>

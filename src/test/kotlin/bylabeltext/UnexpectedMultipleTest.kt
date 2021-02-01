@@ -11,13 +11,14 @@ class UnexpectedMultipleTest {
     fun `fails when more than one is available`() {
         val doc = Jsoup.parse(
             """
-            <label for="x">Username <input /></label>
-            <input id="x" />
+            <label for="email1">Email</label>
+            <input id="email1" />
+            <label>Email<input id="email2" /></label>
         """
         )
 
-        val getByLabelText = { doc.getByLabelText("Username") }
-        val queryByLabelText = { doc.queryByLabelText("Username") }
+        val getByLabelText = { doc.getByLabelText("Email") }
+        val queryByLabelText = { doc.queryByLabelText("Email") }
 
         assertThrows(UndefinedResult::class.java) { getByLabelText() }
         assertThrows(UndefinedResult::class.java) { queryByLabelText() }
