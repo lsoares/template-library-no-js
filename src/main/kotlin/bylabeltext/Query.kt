@@ -4,13 +4,18 @@ import UndefinedResult
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
+fun Element.queryByLabelText(text: Regex): Element? =
+    queryAllByLabelText(text).queryBy()
+
 fun Element.queryByLabelText(
     text: String,
     exact: Boolean = true,
-): List<Element>? =
-    queryAllByLabelText(text, exact)
-        .takeIf { it.isNotEmpty() }
-        ?.also { check(it.size == 1) { throw UndefinedResult() } }
+): Element? =
+    queryAllByLabelText(text, exact).queryBy()
+
+internal fun List<Element>.queryBy() =
+    also { check(it.size <= 1) { throw UndefinedResult() } }
+        .firstOrNull()
 
 fun Element.queryAllByLabelText(
     text: String,

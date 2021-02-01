@@ -45,6 +45,6 @@ class QueryByLabelTextTest {
 
         val byLabelText = doc.queryByLabelText("email", exact = false)
 
-        assertEquals("email", byLabelText?.single()?.id())
+        assertEquals("email", byLabelText?.id())
     }
 }

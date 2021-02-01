@@ -8,20 +8,6 @@ import org.junit.jupiter.api.Test
 
 class GetAllByLabelTextTest {
 
-    @Test
-    fun `gets all inputs by label text`() {
-        val doc = Jsoup.parse(
-            """
-            <label for="email1">Email address</label>
-            <input id="email1" />
-            <label>Email address<input id="email2" /></label>
-        """
-        )
-
-        val byLabelText = doc.getAllByLabelText("Email address")
-
-        assertEquals(listOf("email1", "email2"), byLabelText.map { it.id() })
-    }
 
     @Test
     fun `only form elements are returned`() {
@@ -47,7 +33,6 @@ class GetAllByLabelTextTest {
         assertThrows(UndefinedResult::class.java) { byLabelText() }
     }
 
-    // TODO: receive regex
     // TODO: receive function
     // TODO: non-exact match
 }

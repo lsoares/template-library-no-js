@@ -163,26 +163,6 @@ class QueryAllByLabelTextTest {
     }
 
     @Test
-    fun `search by regex`() {
-        val doc = Jsoup.parse(
-            """
-            <label for='id1'>
-              User id
-            </label>
-            <input id='id1' />
-            <label>
-              Username
-              <textarea></textarea>
-            </label> 
-        """
-        )
-
-        val byLabelText = doc.queryAllByLabelText("Usern.*".toRegex())
-
-        assertTrue(byLabelText.single().tagName() == "textarea")
-    }
-
-    @Test
     fun `search by function`() {
         val doc = Jsoup.parse(
             """

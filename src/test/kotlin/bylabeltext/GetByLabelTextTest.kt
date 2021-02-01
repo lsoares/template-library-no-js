@@ -29,9 +29,7 @@ class GetByLabelTextTest {
 
         assertThrows(UndefinedResult::class.java) { byLabelText() }
     }
-
     // TODO: test correct type
-    // TODO: receive regex
     // TODO: receive function
     // TODO: non-exact match
 }
