@@ -125,15 +125,6 @@ class QueryAllByLabelTextTest {
     // TODO Wrapper labels where the label text is in another child element
 
     @Test
-    fun `returns empty array when no results match`() {
-        val doc = Jsoup.parse("<span />")
-
-        val byLabelText = doc.queryAllByLabelText("Email")
-
-        assertTrue(byLabelText.isEmpty())
-    }
-
-    @Test
     fun `search by function`() {
         val doc = Jsoup.parse(
             """

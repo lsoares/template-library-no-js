@@ -11,15 +11,6 @@ import org.junit.jupiter.api.assertThrows
 class QueryByLabelTextTest {
 
     @Test
-    fun `returns null when no results match`() {
-        val doc = Jsoup.parse("<span />")
-
-        val byLabelText = doc.queryByLabelText("Email")
-
-        assertNull(byLabelText)
-    }
-
-    @Test
     fun `throws error when multiple results match`() {
         val doc = Jsoup.parse(
             """

@@ -21,14 +21,6 @@ class GetByLabelTextTest {
         assertThrows(UndefinedResult::class.java) { byLabelText() }
     }
 
-    @Test
-    fun `fails when none is available`() {
-        val doc = Jsoup.parse("<span></span>")
-
-        val byLabelText = { doc.getByLabelText("Username") }
-
-        assertThrows(UndefinedResult::class.java) { byLabelText() }
-    }
     // TODO: test correct type
     // TODO: receive function
 }
