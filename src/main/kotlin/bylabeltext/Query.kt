@@ -7,6 +7,9 @@ import org.jsoup.select.Elements
 fun Element.queryByLabelText(text: Regex): Element? =
     queryAllByLabelText(text).queryBy()
 
+fun Element.queryByLabelText(text: (Element) -> Boolean): Element? =
+    queryAllByLabelText(null, text).queryBy()
+
 fun Element.queryByLabelText(
     text: String,
     exact: Boolean = true,
