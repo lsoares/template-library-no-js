@@ -17,7 +17,7 @@ class AriaLabelledBy {
 
         val queryByLabelText = doc.queryByLabelText("Username")
         val getByLabelText = doc.getByLabelText("Username")
-        val queryAllByLabelText = doc.queryAllByLabelText(text = "Username")
+        val queryAllByLabelText = doc.queryAllByLabelText("Username")
         val getAllByLabelText = doc.getAllByLabelText("Username")
 
         assertEquals("input", queryByLabelText?.tagName())

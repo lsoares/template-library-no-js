@@ -26,7 +26,7 @@ class NoResultsTest {
     }
 
     @Test
-    fun `fails when no results are found`() {
+    fun `fails when no results match`() {
         val doc = Jsoup.parse("<span />")
 
         val getByLabelText = { doc.getByLabelText("Email") }
