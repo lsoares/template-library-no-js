@@ -21,7 +21,7 @@ class OnlyFormElementsTest {
         val getByLabelText = doc.getByLabelText("Email address")
         val queryByLabelText = doc.queryByLabelText("Email address")
         val getAllByLabelText = doc.getAllByLabelText("Email address")
-        val queryAllByLabelText = doc.queryAllByLabelText("Email address")
+        val queryAllByLabelText = doc.queryAllByLabelText(text = "Email address")
 
         assertEquals("input", getByLabelText.tagName())
         assertEquals("input", queryByLabelText?.tagName())
@@ -41,7 +41,7 @@ class OnlyFormElementsTest {
 
         val queryByLabelText = doc.queryByLabelText("by for")
         val getByLabelText = doc.getByLabelText("by for")
-        val queryAllByLabelText = doc.queryAllByLabelText("by for")
+        val queryAllByLabelText = doc.queryAllByLabelText(text = "by for")
         val getAllByLabelText = doc.getAllByLabelText("by for")
 
         assertEquals(tag, queryByLabelText?.tagName())

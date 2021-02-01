@@ -10,14 +10,9 @@ class FunctionTest {
     fun `search by function`() {
         val doc = Jsoup.parse(
             """
-            <label for='id1'>
-              User id
-            </label>
+            <label for='id1'>User id</label>
             <input id='id1' />
-            <label>
-              Username
-              <textarea></textarea>
-            </label> 
+            <label>Username <textarea></textarea></label> 
         """
         )
 
@@ -32,5 +27,25 @@ class FunctionTest {
         assertEquals("textarea", queryAllByLabelText.single().tagName())
     }
 
-    // TODO: combine with selector
+    @Test
+    fun `search by function with selector`() {
+        val doc = Jsoup.parse(
+            """
+            <label for='id1'>User id</label>
+            <input id='id1' />
+            <label>Username <textarea></textarea></label>
+            <label>Display name <input/></label>
+        """
+        )
+
+        val getByLabelText = doc.getByLabelText("input") { it.text().contains("name") }
+        val queryByLabelText = doc.queryByLabelText("input") { it.text().contains("name") }
+        val getAllByLabelText = doc.getAllByLabelText("input") { it.text().contains("name") }
+        val queryAllByLabelText = doc.queryAllByLabelText("input") { it.text().contains("name") }
+
+        assertEquals("input", getByLabelText.tagName())
+        assertEquals("input", queryByLabelText?.tagName())
+        assertEquals("input", getAllByLabelText.single().tagName())
+        assertEquals("input", queryAllByLabelText.single().tagName())
+    }
 }

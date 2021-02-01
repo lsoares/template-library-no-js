@@ -17,7 +17,7 @@ class WrappedTest {
 
         val queryByLabelText = doc.queryByLabelText("Username")
         val getByLabelText = doc.getByLabelText("Username")
-        val queryAllByLabelText = doc.queryAllByLabelText("Username")
+        val queryAllByLabelText = doc.queryAllByLabelText(text = "Username")
         val getAllByLabelText = doc.getAllByLabelText("Username")
 
         assertEquals("username", queryByLabelText?.attr("name"))

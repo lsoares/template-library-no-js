@@ -20,7 +20,7 @@ class NoResultsTest {
     fun `returns empty array when no results match`() {
         val doc = Jsoup.parse("<span />")
 
-        val byLabelText = doc.queryAllByLabelText("Email")
+        val byLabelText = doc.queryAllByLabelText(text = "Email")
 
         assertTrue(byLabelText.isEmpty())
     }

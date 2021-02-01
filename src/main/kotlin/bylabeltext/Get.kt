@@ -1,6 +1,5 @@
 package bylabeltext
 
-import getAllBy
 import getBy
 import org.jsoup.nodes.Element
 
@@ -10,5 +9,5 @@ fun Element.getByLabelText(text: String, exact: Boolean = true, selector: String
 fun Element.getByLabelText(text: Regex): Element =
     queryAllByLabelText(text).getBy()
 
-fun Element.getByLabelText(text: (Element) -> Boolean): Element =
-    queryAllByLabelText(null, text).getBy()
+fun Element.getByLabelText(selector: String? = null, text: (Element) -> Boolean): Element =
+    queryAllByLabelText(selector, text).getBy()

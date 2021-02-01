@@ -24,7 +24,7 @@ class NoFormElementsTest {
 
         val queryByLabelText = doc.queryByLabelText("nope")
         val getByLabelText = { doc.getByLabelText("nope") }
-        val queryAllByLabelText = doc.queryAllByLabelText("nope")
+        val queryAllByLabelText = doc.queryAllByLabelText(text = "nope")
         val getAllByLabelText = { doc.getAllByLabelText("nope") }
 
         assertNull(queryByLabelText)
@@ -45,8 +45,8 @@ class NoFormElementsTest {
 
         val queryByLabelText = doc.queryByLabelText("Username", selector = "div")
         val getByLabelText = { doc.getByLabelText("Username", selector = "div") }
-        val queryAllByLabelText = doc.queryAllByLabelText("Username", selector = "div")
-        val getAllByLabelText = {doc.getAllByLabelText("Username", selector = "div")}
+        val queryAllByLabelText = doc.queryAllByLabelText(selector = "div", text = "Username")
+        val getAllByLabelText = { doc.getAllByLabelText("Username", selector = "div") }
 
         assertNull(queryByLabelText)
         assertThrows<UndefinedResult> { getByLabelText() }

@@ -32,7 +32,7 @@ class SelectorTest {
         val getByLabelText = doc.getByLabelText("Username", selector = "input")
         val queryByLabelText = doc.queryByLabelText("Username", selector = "input")
         val getAllByLabelText = doc.getAllByLabelText("Username", selector = "input")
-        val queryAllByLabelText = doc.queryAllByLabelText("Username", selector = "input")
+        val queryAllByLabelText = doc.queryAllByLabelText(selector = "input", text = "Username")
 
         assertEquals("input", getByLabelText.tagName())
         assertEquals("input", queryByLabelText?.tagName())
