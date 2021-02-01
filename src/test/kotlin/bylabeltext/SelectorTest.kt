@@ -1,7 +1,6 @@
 package bylabeltext
 
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -12,19 +11,18 @@ class SelectorTest {
     @ValueSource(
         strings = [
             """
-            <label>
-              Username
-              <input />
-            </label>
-            <label>
-              Username
-              <textarea></textarea>
-            </label> 
+            <label>Username<input /></label>
+            <label>Username <textarea></textarea></label> 
         """,
             """
             <label id="username">Username</label>
             <input aria-labelledby="username" />
-            <span aria-labelledby="username">Please enter your username</span>
+            <textarea aria-labelledby="username" />
+        """,
+            """
+            <label for="x">Username</label>
+            <input id="x" />
+            <textarea />
         """
         ]
     )
