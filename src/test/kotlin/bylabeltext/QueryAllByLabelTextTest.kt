@@ -2,53 +2,11 @@ package bylabeltext
 
 import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class QueryAllByLabelTextTest {
-
-    @ParameterizedTest
-    @ValueSource(strings = ["input", "select", "textarea", "button", "output"])
-    fun `get any form element by label - wrapper`(tag: String) {
-        val doc = Jsoup.parse("<label>wrapped <$tag /></label>")
-
-        val byLabelText = doc.queryAllByLabelText("wrapped")
-
-        assertEquals(tag, byLabelText.single().tagName())
-    }
-
-    @ParameterizedTest
-    @ValueSource(
-        strings = [
-            "<label for='x'>nope</label> <div id='x'></div>",
-            "<label>nope <span /></label>",
-            "<label id='x'>nope</label> <section aria-labelledby='x' />"
-        ]
-    )
-    fun `no results with the wrong type`(html: String) {
-        val doc = Jsoup.parse(html)
-
-        val byLabelText = doc.queryAllByLabelText("nope")
-
-        assertTrue(byLabelText.isEmpty())
-    }
-
-    // https://testing-playground.com/gist/20925bfef48061b84eacb647acdddc12/c1fe8d48f98eb253fc868ca6ebb66aa9fe0744eb
-    @Test
-    fun `no results with selector the wrong type`() {
-        val doc = Jsoup.parse(
-            """
-            <label for='x'>Username</label>
-            <div id='x'></input>
-        """
-        )
-
-        val byLabelText = doc.queryAllByLabelText("Username", selector = "div")
-
-        assertTrue(byLabelText.isEmpty())
-    }
 
     @ParameterizedTest
     @ValueSource(

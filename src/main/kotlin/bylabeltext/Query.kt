@@ -10,8 +10,9 @@ fun Element.queryByLabelText(text: Regex): Element? =
 fun Element.queryByLabelText(
     text: String,
     exact: Boolean = true,
+    selector: String? = null,
 ): Element? =
-    queryAllByLabelText(text, exact).queryBy()
+    queryAllByLabelText(text, exact, selector).queryBy()
 
 internal fun List<Element>.queryBy() =
     also { check(it.size <= 1) { throw UndefinedResult() } }
