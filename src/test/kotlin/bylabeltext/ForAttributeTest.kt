@@ -4,7 +4,7 @@ import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class ForAttribute {
+class ForAttributeTest {
 
     @Test
     fun `for attribute`() {
