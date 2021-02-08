@@ -12,6 +12,7 @@ class RegexTest {
             """<textarea name='x' placeholder='place x' />
                     <textarea name='y' placeholder='place y' />"""
         )
+
         val queryByPlaceholderText = doc.queryByPlaceholderText(" y".toRegex())
         val getByPlaceholderText = doc.getByPlaceholderText(" y".toRegex())
         val queryAllByPlaceholderText = doc.queryAllByPlaceholderText(" y".toRegex())
@@ -30,6 +31,7 @@ class RegexTest {
                     <textarea name='y' placeholder='place y' />
                     <input name='z' placeholder='place y' />"""
         )
+
         val queryByPlaceholderText = doc.queryByPlaceholderText(" y".toRegex(), selector = "textarea")
         val getByPlaceholderText = doc.getByPlaceholderText(" y".toRegex(), selector = "textarea")
         val queryAllByPlaceholderText = doc.queryAllByPlaceholderText(" y".toRegex(), selector = "textarea")
