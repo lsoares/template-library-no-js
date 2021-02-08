@@ -1,7 +1,7 @@
 package bytext
 
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class RegexTest {
@@ -15,10 +15,10 @@ class RegexTest {
         val queryAllByText = doc.queryAllByText("Usern.*".toRegex())
         val getAllByText = doc.getAllByText("Usern.*".toRegex())
 
-        assertTrue(queryByText?.tagName() == "div")
-        assertTrue(getByText.tagName() == "div")
-        assertTrue(queryAllByText.single().tagName() == "div")
-        assertTrue(getAllByText.single().tagName() == "div")
+        assertEquals("div", queryByText?.tagName())
+        assertEquals("div", getByText.tagName())
+        assertEquals("div", queryAllByText.single().tagName())
+        assertEquals("div", getAllByText.single().tagName())
     }
 
     @Test
@@ -30,9 +30,9 @@ class RegexTest {
         val queryAllByText = doc.queryAllByText("Usern.*".toRegex(), selector = "div")
         val getAllByText = doc.getAllByText("Usern.*".toRegex(), selector = "div")
 
-        assertTrue(queryByText?.tagName() == "div")
-        assertTrue(getByText.tagName() == "div")
-        assertTrue(queryAllByText.single().tagName() == "div")
-        assertTrue(getAllByText.single().tagName() == "div")
+        assertEquals("div", queryByText?.tagName())
+        assertEquals("div", getByText.tagName())
+        assertEquals("div", queryAllByText.single().tagName())
+        assertEquals("div", getAllByText.single().tagName())
     }
 }

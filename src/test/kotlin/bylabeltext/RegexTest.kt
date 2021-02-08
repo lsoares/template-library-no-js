@@ -1,7 +1,7 @@
 package bylabeltext
 
 import org.jsoup.Jsoup
-import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class RegexTest {
@@ -21,10 +21,10 @@ class RegexTest {
         val queryAllByLabelText = doc.queryAllByLabelText("Usern.*".toRegex())
         val getAllByLabelText = doc.getAllByLabelText("Usern.*".toRegex())
 
-        assertTrue(queryByLabelText?.tagName() == "textarea")
-        assertTrue(getByLabelText.tagName() == "textarea")
-        assertTrue(queryAllByLabelText.single().tagName() == "textarea")
-        assertTrue(getAllByLabelText.single().tagName() == "textarea")
+        assertEquals("textarea", queryByLabelText?.tagName())
+        assertEquals("textarea", getByLabelText.tagName())
+        assertEquals("textarea", queryAllByLabelText.single().tagName())
+        assertEquals("textarea", getAllByLabelText.single().tagName())
     }
 
     @Test
@@ -43,9 +43,9 @@ class RegexTest {
         val queryAllByLabelText = doc.queryAllByLabelText("Usern.*".toRegex(), selector = "textarea")
         val getAllByLabelText = doc.getAllByLabelText("Usern.*".toRegex(), selector = "textarea")
 
-        assertTrue(queryByLabelText?.tagName() == "textarea")
-        assertTrue(getByLabelText.tagName() == "textarea")
-        assertTrue(queryAllByLabelText.single().tagName() == "textarea")
-        assertTrue(getAllByLabelText.single().tagName() == "textarea")
+        assertEquals("textarea", queryByLabelText?.tagName())
+        assertEquals("textarea", getByLabelText.tagName())
+        assertEquals("textarea", queryAllByLabelText.single().tagName())
+        assertEquals("textarea", getAllByLabelText.single().tagName())
     }
 }
