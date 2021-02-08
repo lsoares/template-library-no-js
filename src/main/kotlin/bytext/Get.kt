@@ -3,5 +3,8 @@ package bytext
 import getBy
 import org.jsoup.nodes.Element
 
-fun Element.getByText(text: String): Element =
-    queryAllByText(text = text).getBy()
+fun Element.getByText(text: String, selector: String = "*"): Element =
+    queryAllByText(text = text, selector = selector).getBy()
+
+fun Element.getByText(text: Regex, selector: String = "*"): Element =
+    queryAllByText(text = text, selector = selector).getBy()

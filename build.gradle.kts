@@ -19,7 +19,7 @@ dependencies {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform {}
+    useJUnitPlatform()
 }
 
 tasks.withType<KotlinCompile> {
