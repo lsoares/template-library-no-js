@@ -4,7 +4,7 @@ import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class TextSearchTest {
+class TextTest {
 
     @Test
     fun `by text`() {
