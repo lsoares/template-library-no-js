@@ -27,12 +27,12 @@ class SelectorTest {
         ]
     )
     fun `specifying a selector`(html: String) {
-        val doc = Jsoup.parse(html)
+        val doc = Jsoup.parse("<div class='wrapper'>$html</div>")
 
-        val getByLabelText = doc.getByLabelText("Username", selector = "input")
-        val queryByLabelText = doc.queryByLabelText("Username", selector = "input")
-        val getAllByLabelText = doc.getAllByLabelText("Username", selector = "input")
-        val queryAllByLabelText = doc.queryAllByLabelText("Username", selector = "input")
+        val getByLabelText = doc.getByLabelText("Username", selector = ".wrapper input")
+        val queryByLabelText = doc.queryByLabelText("Username", selector = ".wrapper input")
+        val getAllByLabelText = doc.getAllByLabelText("Username", selector = ".wrapper input")
+        val queryAllByLabelText = doc.queryAllByLabelText("Username", selector = ".wrapper input")
 
         assertEquals("input", getByLabelText.tagName())
         assertEquals("input", queryByLabelText?.tagName())

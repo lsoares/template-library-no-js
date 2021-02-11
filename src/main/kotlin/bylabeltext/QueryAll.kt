@@ -1,5 +1,6 @@
 package bylabeltext
 
+import filterBySelector
 import org.jsoup.nodes.Element
 import org.jsoup.select.Elements
 
@@ -22,21 +23,14 @@ fun Element.queryAllByLabelText(text: Regex, selector: String? = null) =
 fun Element.queryAllByLabelText(
     selector: String? = null,
     text: (Element) -> Boolean,
-): List<Element> =
-    getElementsByTag("label")
-        .asSequence()
-        .filter(text)
-        .map {
-            it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it))
-        }
-        .flatten()
-        .filter { // todo!!!! THIS IS WRONG
-            selector == null || it.tagName() == selector
-        }
-        .filter {
-            it.tagName() in setOf("input", "select", "textarea", "button", "output")
-        }
-        .toList()
+): List<Element> = getElementsByTag("label")
+       .asSequence()
+       .filter(text)
+       .map { it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it)) }
+       .flatten()
+       .filter { it.tagName() in setOf("input", "select", "textarea", "button", "output") }
+       .toList()
+       .filterBySelector(selector)
 
 private fun Element.getByAriaLabelledBy(label: Element) =
     label.attr("id")

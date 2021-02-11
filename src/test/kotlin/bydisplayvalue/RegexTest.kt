@@ -40,17 +40,19 @@ class RegexTest {
     @Test
     fun `search one by regex with a selector`() {
         val doc = Jsoup.parse("""
-           <input value="benjamin franklin" id="name" />
-           <textarea>benjamin franklin</textarea>
-           <select>
-              <option selected='true'>benjamin franklin</option>
-           </select>
+            <div class='wrapper'>
+               <input value="benjamin franklin" id="name" />
+               <textarea>benjamin franklin</textarea>
+               <select>
+                  <option selected='true'>benjamin franklin</option>
+               </select>
+            </div>
         """)
 
-        val queryByDisplayValue = doc.queryByDisplayValue("benj.*".toRegex(), selector = "input")
-        val getByDisplayValue = doc.getByDisplayValue("benj.*".toRegex(), selector = "input")
-        val queryAllByDisplayValue = doc.queryAllByDisplayValue("benj.*".toRegex(), selector = "input")
-        val getAllByDisplayValue = doc.getAllByDisplayValue("benj.*".toRegex(), selector = "input")
+        val queryByDisplayValue = doc.queryByDisplayValue("benj.*".toRegex(), selector = ".wrapper input")
+        val getByDisplayValue = doc.getByDisplayValue("benj.*".toRegex(), selector = ".wrapper input")
+        val queryAllByDisplayValue = doc.queryAllByDisplayValue("benj.*".toRegex(), selector = ".wrapper input")
+        val getAllByDisplayValue = doc.getAllByDisplayValue("benj.*".toRegex(), selector = ".wrapper input")
 
         assertEquals("name", queryByDisplayValue?.id())
         assertEquals("name", getByDisplayValue.id())

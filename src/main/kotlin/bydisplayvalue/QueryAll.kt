@@ -1,8 +1,9 @@
 package bydisplayvalue
 
+import filterBySelector
 import org.jsoup.nodes.Element
 
-fun Element.queryAllByDisplayValue(text: String, selector: String = "*"): List<Element> =
+fun Element.queryAllByDisplayValue(text: String, selector: String? = null): List<Element> =
     getInputs(text) + getTextareas(text) + getSelects(text)
 
 private fun Element.getInputs(text: String): List<Element> =
@@ -13,20 +14,23 @@ private fun Element.getTextareas(text: String): List<Element> =
         .filter { it.text() == text }
 
 private fun Element.getSelects(text: String): List<Element> =
-    getElementsByTag("select").filter { it.select("option[selected]").firstOrNull()?.ownText() == text }
+    getElementsByTag("select")
+        .filter { it.select("option[selected]").firstOrNull()?.ownText() == text }
 
 
-fun Element.queryAllByDisplayValue(text: Regex, selector: String = "*"): List<Element> =
+fun Element.queryAllByDisplayValue(text: Regex, selector: String? = null): List<Element> =
     (getInputs(text) + getTextareas(text) + getSelects(text))
-        .filter { selector == "*" || it.`is`(selector) }
+        .filterBySelector(selector)
 
-private fun Element.getInputs(text: Regex): List<Element> =
-    getElementsByTag("input").map { it.getElementsByAttributeValueMatching("value", text.toPattern()) }.flatten()
+private fun Element.getInputs(text: Regex) =
+    getElementsByTag("input")
+        .map { it.getElementsByAttributeValueMatching("value", text.toPattern()) }.flatten()
 
-private fun Element.getTextareas(text: Regex): List<Element> =
-    getElementsByTag("textarea").map { it.getElementsMatchingOwnText(text.toPattern()) }.flatten()
+private fun Element.getTextareas(text: Regex) =
+    getElementsByTag("textarea")
+        .map { it.getElementsMatchingOwnText(text.toPattern()) }.flatten()
 
-private fun Element.getSelects(text: Regex): List<Element> =
+private fun Element.getSelects(text: Regex) =
     getElementsByTag("select").filter {
         it.select("option[selected]").map { it.getElementsMatchingOwnText(text.toPattern()) }.flatten().isNotEmpty()
     }

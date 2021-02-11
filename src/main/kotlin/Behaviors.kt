@@ -1,4 +1,5 @@
 import org.jsoup.nodes.Element
+import org.jsoup.select.Elements
 import java.lang.Exception
 
 internal fun List<Element>.getBy() =
@@ -12,3 +13,7 @@ internal fun List<Element>.queryBy() =
         .firstOrNull()
 
 class UndefinedResult : Exception()
+
+
+internal fun List<Element>.filterBySelector(selector: String? = null) =
+    filter { selector == null || it.`is`(selector) }
