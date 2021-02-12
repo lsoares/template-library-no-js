@@ -15,5 +15,5 @@ internal fun List<Element>.queryBy() =
 class UndefinedResult : Exception()
 
 
-internal fun List<Element>.filterBySelector(selector: String? = null) =
-    filter { selector == null || it.`is`(selector) }
+internal fun List<Element>.filterBySelector(selector: String) =
+    filter { selector == "*" || it.`is`(selector) }

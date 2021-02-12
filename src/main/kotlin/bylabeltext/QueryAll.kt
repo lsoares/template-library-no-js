@@ -7,7 +7,7 @@ import org.jsoup.select.Elements
 fun Element.queryAllByLabelText(
     text: String,
     exact: Boolean = true,
-    selector: String? = null,
+    selector: String = "*",
 ) = queryAllByLabelText(selector) {
     when (exact) {
         true -> it.text() == text
@@ -15,22 +15,22 @@ fun Element.queryAllByLabelText(
     }
 }
 
-fun Element.queryAllByLabelText(text: Regex, selector: String? = null) =
+fun Element.queryAllByLabelText(text: Regex, selector: String = "*") =
     queryAllByLabelText(selector) {
         it.text().matches(text)
     }
 
 fun Element.queryAllByLabelText(
-    selector: String? = null,
+    selector: String = "*",
     text: (Element) -> Boolean,
 ): List<Element> = getElementsByTag("label")
-       .asSequence()
-       .filter(text)
-       .map { it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it)) }
-       .flatten()
-       .filter { it.tagName() in setOf("input", "select", "textarea", "button", "output") }
-       .toList()
-       .filterBySelector(selector)
+    .asSequence()
+    .filter(text)
+    .map { it.children() + getByAriaLabelledBy(it) + listOfNotNull(getByFor(it)) }
+    .flatten()
+    .filter { it.tagName() in setOf("input", "select", "textarea", "button", "output") }
+    .toList()
+    .filterBySelector(selector)
 
 private fun Element.getByAriaLabelledBy(label: Element) =
     label.attr("id")

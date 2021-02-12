@@ -5,7 +5,7 @@ import org.jsoup.nodes.Element
 
 fun Element.queryAllByTitle(
     text: String,
-    selector: String? = null,
+    selector: String = "*",
     exact: Boolean = false,
 ): List<Element> =
     when (exact) {
@@ -15,7 +15,7 @@ fun Element.queryAllByTitle(
 
 fun Element.queryAllByTitle(
     text: Regex,
-    selector: String? = null,
+    selector: String = "*",
 ): List<Element> =
     getElementsByAttributeValueMatching("title", text.toPattern())
         .filterBySelector(selector)

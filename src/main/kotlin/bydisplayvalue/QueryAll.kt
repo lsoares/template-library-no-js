@@ -3,7 +3,7 @@ package bydisplayvalue
 import filterBySelector
 import org.jsoup.nodes.Element
 
-fun Element.queryAllByDisplayValue(text: String, selector: String? = null): List<Element> =
+fun Element.queryAllByDisplayValue(text: String, selector: String = "*"): List<Element> =
     getInputs(text) + getTextareas(text) + getSelects(text)
 
 private fun Element.getInputs(text: String): List<Element> =
@@ -18,7 +18,7 @@ private fun Element.getSelects(text: String): List<Element> =
         .filter { it.select("option[selected]").firstOrNull()?.ownText() == text }
 
 
-fun Element.queryAllByDisplayValue(text: Regex, selector: String? = null): List<Element> =
+fun Element.queryAllByDisplayValue(text: Regex, selector: String = "*"): List<Element> =
     (getInputs(text) + getTextareas(text) + getSelects(text))
         .filterBySelector(selector)
 
