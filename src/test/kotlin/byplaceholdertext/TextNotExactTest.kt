@@ -4,7 +4,7 @@ import org.jsoup.Jsoup
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-class TestNotExactTest {
+class TextNotExactTest {
 
     @Test
     fun `not exact`() {
