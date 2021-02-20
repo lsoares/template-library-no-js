@@ -7,7 +7,10 @@ fun Element.queryAllByDisplayValue(text: String, selector: String = "*"): List<E
     getInputs(text) + getTextareas(text) + getSelects(text)
 
 private fun Element.getInputs(text: String): List<Element> =
-    getElementsByTag("input").map { it.getElementsByAttributeValue("value", text) }.flatten()
+    getElementsByTag("input")
+        .map { it.getElementsByAttributeValue("value", text) }
+        .flatten()
+        .filter { it.`val`() == text }
 
 private fun Element.getTextareas(text: String): List<Element> =
     getElementsByTag("textarea").map { it.getElementsContainingOwnText(text) }.flatten()

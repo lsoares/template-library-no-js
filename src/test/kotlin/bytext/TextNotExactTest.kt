@@ -28,7 +28,7 @@ class TextNotExactTest {
                 <span>I accept</span>
                 <p>I accept</p>
             </div>
-            <div>I accept</div>
+            <p>I accept</p>
         """
         )
 
