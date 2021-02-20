@@ -11,7 +11,7 @@ fun Element.queryAllByLabelText(
 ) = queryAllByLabelText(selector) {
     when (exact) {
         true -> it.text() == text
-        false -> it.text().toLowerCase().contains(text.toLowerCase())
+        false -> it.text().contains(text, ignoreCase = true)
     }
 }
 

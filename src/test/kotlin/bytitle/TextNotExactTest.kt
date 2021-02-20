@@ -24,7 +24,8 @@ class TextNotExactTest {
     @Test
     fun `not exact with selector`() {
         val doc = Jsoup.parse(
-            "<img title='abcdef' /><input title='abcdef' />"
+            """<img title='abcdef' />
+                    <input title='abcdef' />"""
         )
 
         val getByTitle = doc.getByTitle("abc", exact = false, selector = "input")

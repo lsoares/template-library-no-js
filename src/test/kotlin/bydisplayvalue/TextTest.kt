@@ -49,7 +49,7 @@ class TextTest {
         strings = [
             "<input value='A B C' />",
             "<textarea>A B C</textarea>",
-            """"<select>
+            """<select>
                   <option selected='selected'>A B C</option>
                </select>""",
             """<select>
@@ -60,10 +60,10 @@ class TextTest {
     fun `case sensitive`(html: String) {
         val doc = Jsoup.parse(html)
 
-        val getByDisplayValue = { doc.getByDisplayValue("A b c") }
-        val queryByDisplayValue = doc.queryByDisplayValue("A b c")
-        val getAllByDisplayValue = { doc.getAllByDisplayValue("A b c") }
         val queryAllByDisplayValue = doc.queryAllByDisplayValue("A b c")
+        val queryByDisplayValue = doc.queryByDisplayValue("A b c")
+        val getByDisplayValue = { doc.getByDisplayValue("A b c") }
+        val getAllByDisplayValue = { doc.getAllByDisplayValue("A b c") }
 
         assertNull(queryByDisplayValue)
         assertTrue(queryAllByDisplayValue.isEmpty())
